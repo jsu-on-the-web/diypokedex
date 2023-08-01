@@ -27,6 +27,10 @@ public class CreatePokemonDTO {
     @Setter
     float weight;
 
+    @Getter
+    @Setter
+    long preEvolutionId;
+
     @NotBlank
     @Getter
     @Setter

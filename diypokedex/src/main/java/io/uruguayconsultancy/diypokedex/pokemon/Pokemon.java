@@ -72,6 +72,11 @@ public class Pokemon {
     @Column(name = "base_speed")
     private int baseSpeed;
 
+    @Getter
+    @Setter
+    @Column(name = "pre_evolution_id")
+    private Long preEvolutionId;
+
     /* -------------------------------------------------------------------------- */
     /*                                Constructors                                */
     /* -------------------------------------------------------------------------- */
