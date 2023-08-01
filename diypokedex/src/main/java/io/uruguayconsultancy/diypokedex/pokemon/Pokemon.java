@@ -35,41 +35,41 @@ public class Pokemon {
     @Getter
     @Setter
     @Column(name = "height")
-    private float height;
+    private double height;
 
     @Getter
     @Setter
     @Column(name = "weight")
-    private float weight;
+    private double weight;
 
     @Getter
     @Setter
-    @Column(name = "base_hp")
+    @Column(name = "base_hp", nullable = false, columnDefinition = "int default 0")
     private int baseHp;
 
     @Getter
     @Setter
-    @Column(name = "base_attack")
+    @Column(name = "base_attack", nullable = false, columnDefinition = "int default 0")
     private int baseAttack;
 
     @Getter
     @Setter
-    @Column(name = "base_defense")
+    @Column(name = "base_defense", nullable = false, columnDefinition = "int default 0")
     private int baseDefense;
 
     @Getter
     @Setter
-    @Column(name = "base_spatk")
+    @Column(name = "base_spatk", nullable = false, columnDefinition = "int default 0")
     private int baseSpAtk;
 
     @Getter
     @Setter
-    @Column(name = "base_spdef")
+    @Column(name = "base_spdef", nullable = false, columnDefinition = "int default 0")
     private int baseSpDef;
 
     @Getter
     @Setter
-    @Column(name = "base_speed")
+    @Column(name = "base_speed", nullable = false, columnDefinition = "int default 0")
     private int baseSpeed;
 
     @Getter
@@ -85,7 +85,7 @@ public class Pokemon {
 
     }
     
-    public Pokemon(String name, String type, float height, float weight, int baseHp, int baseAttack, int baseDefense,
+    public Pokemon(String name, String type, double height, double weight, int baseHp, int baseAttack, int baseDefense,
             int baseSpAtk, int baseSpDef, int baseSpeed) {
         super();
         this.name = name;

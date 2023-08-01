@@ -1,4 +1,7 @@
+package io.uruguayconsultancy.diypokedex.pokemon;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,52 +16,53 @@ public class CreatePokemonDTO {
     @Setter
     private String type;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private float height;
+    private double height = 0.0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private float weight;
+    private double weight = 0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
     private long preEvolutionId;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private int baseHp;
+    private int baseHp = 0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private int baseAttack;
+    private int baseAttack = 0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
     private int baseDefense;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private int baseSpAtk;
+    private int baseSpAtk = 0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private int baseSpDef;
+    private int baseSpDef = 0;
 
-    @NotBlank
+    @NotNull
     @Getter
     @Setter
-    private int baseSpeed;
+    private int baseSpeed = 0;
 
-    public CreatePokemonDTO(String name, String type, float height, float weight, int baseHp, int baseAttack, int baseDefense, int baseSpAtk, int baseSpDef, int baseSpeed) {
+    public CreatePokemonDTO(String name, String type, double height, double weight, int baseHp, int baseAttack,
+            int baseDefense, int baseSpAtk, int baseSpDef, int baseSpeed) {
         this.name = name;
         this.type = type;
         this.height = height;
