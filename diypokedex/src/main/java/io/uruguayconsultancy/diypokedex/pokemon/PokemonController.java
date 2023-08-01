@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.uruguayconsultancy.diypokedex.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -24,9 +25,73 @@ public class PokemonController {
     private PokemonService pokemonService;
 
     // * CREATE
+
+    /**
+     * Creates a new Pokemon.
+     *
+     * @param  data  the data used to create the Pokemon
+     * @return       the created Pokemon and a HTTP status code
+     */
     @PostMapping
     public ResponseEntity<Pokemon> createPokemon(@Valid @RequestBody CreatePokemonDTO data) {
         Pokemon pokemon = pokemonService.createPokemon(data);
         return new ResponseEntity<>(pokemon, HttpStatus.CREATED);
+    }
+
+    // * READ
+
+    /**
+     * Retrieves all the Pokemon.
+     *
+     * @return         	A ResponseEntity containing a list of Pokemon objects
+     */
+    @GetMapping
+    public ResponseEntity<List<Pokemon>> getAllPokemon() {
+        List<Pokemon> pokemons = pokemonService.getAllPokemon();
+        return new ResponseEntity<>(pokemons, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves a Pokemon by its ID.
+     *
+     * @param  id  the ID of the Pokemon to retrieve
+     * @return     the ResponseEntity containing the retrieved Pokemon and the HTTP status code
+     */
+    @GetMapping("/api/v1/pokemon/{id}")
+    public ResponseEntity<Pokemon> getPokemon(@PathVariable Long id) {
+        Optional<Pokemon> pokemon = pokemonService.getPokemon(id);
+        if (pokemon.isEmpty()) {
+            throw new NotFoundException(String.format("Pokemon with id %d not found", id));
+        }
+        return new ResponseEntity<>(pokemon.get(), HttpStatus.OK);
+    }
+
+    // * UPDATE
+
+    /**
+     * Updates a Pokemon with the given ID.
+     *
+     * @param  id   the ID of the Pokemon to update
+     * @param  data the data to update the Pokemon with
+     * @return      the updated Pokemon if present
+     */
+    @PatchMapping("/api/v1/pokemon/{id}")
+    public ResponseEntity<Pokemon> updatePokemon(@PathVariable Long id, @RequestBody UpdatePokemonDTO data) {
+        Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
+        if (pokemon.isEmpty()) {
+            throw new NotFoundException(String.format("Pokemon with id %d not found, cannot update", id));
+        }
+        return new ResponseEntity<Pokemon>(pokemon.get(), HttpStatus.OK);
+    }
+
+    //* DELETE
+
+    @DeleteMapping("/api/v1/pokemon/{id}")
+    public ResponseEntity<Void> deletePokemon(@PathVariable Long id) {
+        boolean deleted = pokemonService.deletePokemon(id);
+        if (!deleted) {
+            throw new NotFoundException(String.format("Pokemon with id %d not found, cannot delete", id));
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 }
