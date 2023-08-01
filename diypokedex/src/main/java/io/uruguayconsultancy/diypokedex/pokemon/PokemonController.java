@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.uruguayconsultancy.diypokedex.exceptions.NotFoundException;
@@ -57,8 +59,9 @@ public class PokemonController {
      * @param  id  the ID of the Pokemon to retrieve
      * @return     the ResponseEntity containing the retrieved Pokemon and the HTTP status code
      */
-    @GetMapping("/api/v1/pokemon/{id}")
-    public ResponseEntity<Pokemon> getPokemon(@PathVariable Long id) {
+    @GetMapping("/api/v1/pokemon/")
+    @ResponseBody
+    public ResponseEntity<Pokemon> getPokemon(@RequestParam(name = "id", required = true) Long id) {
         Optional<Pokemon> pokemon = pokemonService.getPokemon(id);
         if (pokemon.isEmpty()) {
             throw new NotFoundException(String.format("Pokemon with id %d not found", id));
@@ -76,7 +79,7 @@ public class PokemonController {
      * @return      the updated Pokemon if present
      */
     @PatchMapping("/api/v1/pokemon/{id}")
-    public ResponseEntity<Pokemon> updatePokemon(@PathVariable Long id, @RequestBody UpdatePokemonDTO data) {
+    public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id, @RequestBody UpdatePokemonDTO data) {
         Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
         if (pokemon.isEmpty()) {
             throw new NotFoundException(String.format("Pokemon with id %d not found, cannot update", id));
