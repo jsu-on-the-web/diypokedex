@@ -10,11 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import lombok.Getter;
+import lombok.Setter;
 
 @Service
 public class PokemonService {
-    
+    // Getters and setters are for testing purposes only
     @Autowired
+    @Getter
+    @Setter
     private PokemonRepository pokemonRepository;
 
     @Autowired

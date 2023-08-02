@@ -29,4 +29,14 @@ public class PokemonRepositoryTest {
 
         assertThat(testRepo.findAll()).hasSize(1);
     }
+
+    @Test 
+    void testFindById() {
+        Pokemon p1 = new Pokemon("Blorbus", "Normal", 1.0, 1.0, 10, 10, 10, 10, 10, 10);
+        testRepo.save(p1);
+        Pokemon p2 = new Pokemon("Null", "Ghost", 0, 0, 0, 0, 0, 0, 0, 0);
+        testRepo.save(p2);
+
+        assertThat(testRepo.findById(1L)).get().isEqualTo(p1);
+    }
 }
