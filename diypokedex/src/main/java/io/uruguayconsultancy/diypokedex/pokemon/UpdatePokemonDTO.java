@@ -18,12 +18,12 @@ public class UpdatePokemonDTO {
     @Getter
     @Setter
     @Pattern(regexp = "^[-+]?\\d*\\.?\\d+$", message = "Only decimal numbers are allowed")
-    float height;
+    double height;
 
     @Getter
     @Setter
     @Pattern(regexp = "^[-+]?\\d*\\.?\\d+$", message = "Only decimal numbers are allowed")
-    float weight;
+    double weight;
 
     @Getter
     @Setter

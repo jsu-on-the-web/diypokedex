@@ -79,7 +79,7 @@ public class PokemonController {
      * @return      the updated Pokemon if present
      */
     @PatchMapping("{id}")
-    public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id, @RequestBody UpdatePokemonDTO data) {
+    public ResponseEntity<Pokemon> updatePokemon(@PathVariable Long id, @RequestBody UpdatePokemonDTO data) {
         Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
         if (pokemon.isEmpty()) {
             throw new NotFoundException(String.format("Pokemon with id %d not found, cannot update", id));

@@ -51,7 +51,10 @@ public class PokemonService {
         if (p.isEmpty()) {
             return null;
         }
-        Pokemon pokemon = modelMapper.map(data, Pokemon.class);
+
+
+        Pokemon pokemon = p.get();
+        modelMapper.map(data, pokemon);
         this.pokemonRepository.save(pokemon);
         return p;
     }
