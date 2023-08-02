@@ -68,4 +68,8 @@ public class PokemonService {
 
         return null;
     }
+
+    public List<Pokemon> getPokemonOfType(String type) {
+        return pokemonRepository.findByType(type);
+    }
 }

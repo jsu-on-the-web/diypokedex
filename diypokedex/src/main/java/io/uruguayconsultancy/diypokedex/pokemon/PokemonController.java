@@ -62,7 +62,7 @@ public class PokemonController {
      * @return the ResponseEntity containing the retrieved Pokemon and the HTTP
      *         status code
      */
-    @GetMapping("/query")
+    @GetMapping("/query/id")
     @ResponseBody
     public ResponseEntity<Pokemon> getPokemon(@RequestParam(name = "id", required = true) Long id) {
         Optional<Pokemon> pokemon = pokemonService.getPokemon(id);
@@ -70,6 +70,16 @@ public class PokemonController {
             throw new NotFoundException(String.format("Pokemon with id %d not found", id));
         }
         return new ResponseEntity<>(pokemon.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/query/type")
+    @ResponseBody
+    public ResponseEntity<List<Pokemon>> getPokemonOfType(@RequestParam(name = "type", required = true) String type) {
+        List<Pokemon> pokemonOfType = pokemonService.getPokemonOfType(type);
+        if (pokemonOfType.isEmpty()) {
+            throw new NotFoundException(String.format("Pokemon with type %s not found", type));
+        }
+        return new ResponseEntity<>(pokemonOfType, HttpStatus.OK);
     }
 
     @GetMapping("/min/{stat}")
