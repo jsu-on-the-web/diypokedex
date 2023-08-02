@@ -72,4 +72,8 @@ public class PokemonService {
     public List<Pokemon> getPokemonOfType(String type) {
         return pokemonRepository.findByType(type);
     }
+
+    public List<Pokemon> findPokemonWithHPHigherThan(int n) {
+        return pokemonRepository.findPokemonWithHpHigherThan(n);
+    }
 }

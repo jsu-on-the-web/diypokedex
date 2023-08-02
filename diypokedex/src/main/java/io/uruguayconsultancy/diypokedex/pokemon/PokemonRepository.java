@@ -13,4 +13,7 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
     @Query("SELECT p FROM Pokemon p WHERE p.type = :type")
     List<Pokemon> findByType(@Param("type") String type);
+
+    @Query("SELECT p FROM Pokemon p WHERE p.baseHp > :n")
+    List<Pokemon> findPokemonWithHpHigherThan(int n);
 }

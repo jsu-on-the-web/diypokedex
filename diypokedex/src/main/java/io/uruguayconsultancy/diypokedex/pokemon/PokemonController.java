@@ -92,6 +92,11 @@ public class PokemonController {
 
     }
 
+    @GetMapping("/query/hp")
+    public List<Pokemon> getPokemonWithHighHp(@RequestParam(name = "minHp", required = true) int n) {
+        return pokemonService.findPokemonWithHPHigherThan(n);
+    }
+
     // * UPDATE
 
     /**
