@@ -59,7 +59,7 @@ public class PokemonController {
      * @param  id  the ID of the Pokemon to retrieve
      * @return     the ResponseEntity containing the retrieved Pokemon and the HTTP status code
      */
-    @GetMapping("/api/v1/pokemon/")
+    @GetMapping("/query")
     @ResponseBody
     public ResponseEntity<Pokemon> getPokemon(@RequestParam(name = "id", required = true) Long id) {
         Optional<Pokemon> pokemon = pokemonService.getPokemon(id);
@@ -78,8 +78,8 @@ public class PokemonController {
      * @param  data the data to update the Pokemon with
      * @return      the updated Pokemon if present
      */
-    @PatchMapping("{id}")
-    public ResponseEntity<Pokemon> updatePokemon(@PathVariable Long id, @RequestBody UpdatePokemonDTO data) {
+    @PatchMapping("/query")
+    public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id, @RequestBody UpdatePokemonDTO data) {
         Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
         if (pokemon.isEmpty()) {
             throw new NotFoundException(String.format("Pokemon with id %d not found, cannot update", id));
@@ -89,7 +89,7 @@ public class PokemonController {
 
     //* DELETE
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> deletePokemon(@RequestParam(name = "id", required = true) Long id) {
         boolean deleted = pokemonService.deletePokemon(id);
         if (!deleted) {
