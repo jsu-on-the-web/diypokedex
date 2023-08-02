@@ -78,7 +78,7 @@ public class PokemonController {
      * @param  data the data to update the Pokemon with
      * @return      the updated Pokemon if present
      */
-    @PatchMapping("/api/v1/pokemon/{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id, @RequestBody UpdatePokemonDTO data) {
         Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
         if (pokemon.isEmpty()) {
@@ -89,8 +89,8 @@ public class PokemonController {
 
     //* DELETE
 
-    @DeleteMapping("/api/v1/pokemon/{id}")
-    public ResponseEntity<Void> deletePokemon(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletePokemon(@RequestParam(name = "id", required = true) Long id) {
         boolean deleted = pokemonService.deletePokemon(id);
         if (!deleted) {
             throw new NotFoundException(String.format("Pokemon with id %d not found, cannot delete", id));
