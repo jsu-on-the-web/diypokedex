@@ -3,6 +3,8 @@ package io.uruguayconsultancy.diypokedex.pokemon;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.text.html.Option;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,8 @@ public class PokemonController {
     /**
      * Creates a new Pokemon.
      *
-     * @param  data  the data used to create the Pokemon
-     * @return       the created Pokemon and a HTTP status code
+     * @param data the data used to create the Pokemon
+     * @return the created Pokemon and a HTTP status code
      */
     @PostMapping
     public ResponseEntity<Pokemon> createPokemon(@Valid @RequestBody CreatePokemonDTO data) {
@@ -45,7 +47,7 @@ public class PokemonController {
     /**
      * Retrieves all the Pokemon.
      *
-     * @return         	A ResponseEntity containing a list of Pokemon objects
+     * @return A ResponseEntity containing a list of Pokemon objects
      */
     @GetMapping
     public ResponseEntity<List<Pokemon>> getAllPokemon() {
@@ -56,8 +58,9 @@ public class PokemonController {
     /**
      * Retrieves a Pokemon by its ID.
      *
-     * @param  id  the ID of the Pokemon to retrieve
-     * @return     the ResponseEntity containing the retrieved Pokemon and the HTTP status code
+     * @param id the ID of the Pokemon to retrieve
+     * @return the ResponseEntity containing the retrieved Pokemon and the HTTP
+     *         status code
      */
     @GetMapping("/query")
     @ResponseBody
@@ -69,17 +72,28 @@ public class PokemonController {
         return new ResponseEntity<>(pokemon.get(), HttpStatus.OK);
     }
 
+    @GetMapping("/min/{stat}")
+    @ResponseBody
+    public ResponseEntity<Pokemon> getMinStat(@PathVariable String stat) {
+
+        Optional<Pokemon> pokemon = pokemonService.getMinStat(stat);
+
+        return new ResponseEntity<>(pokemon.get(), HttpStatus.OK);
+
+    }
+
     // * UPDATE
 
     /**
      * Updates a Pokemon with the given ID.
      *
-     * @param  id   the ID of the Pokemon to update
-     * @param  data the data to update the Pokemon with
-     * @return      the updated Pokemon if present
+     * @param id   the ID of the Pokemon to update
+     * @param data the data to update the Pokemon with
+     * @return the updated Pokemon if present
      */
     @PatchMapping("/query")
-    public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id, @RequestBody UpdatePokemonDTO data) {
+    public ResponseEntity<Pokemon> updatePokemon(@RequestParam(name = "id", required = true) Long id,
+            @RequestBody UpdatePokemonDTO data) {
         Optional<Pokemon> pokemon = pokemonService.updatePokemon(id, data);
         if (pokemon.isEmpty()) {
             throw new NotFoundException(String.format("Pokemon with id %d not found, cannot update", id));
@@ -87,7 +101,7 @@ public class PokemonController {
         return new ResponseEntity<Pokemon>(pokemon.get(), HttpStatus.OK);
     }
 
-    //* DELETE
+    // * DELETE
 
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deletePokemon(@RequestParam(name = "id", required = true) Long id) {

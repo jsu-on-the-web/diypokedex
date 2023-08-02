@@ -3,6 +3,8 @@ package io.uruguayconsultancy.diypokedex.pokemon;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.text.html.Option;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +59,13 @@ public class PokemonService {
         modelMapper.map(data, pokemon);
         this.pokemonRepository.save(pokemon);
         return p;
+    }
+
+    public Optional<Pokemon> getMinStat(String stat) {
+        if (stat.equals("hp")) {
+            return this.pokemonRepository.selectMinHp();
+        }
+
+        return null;
     }
 }
